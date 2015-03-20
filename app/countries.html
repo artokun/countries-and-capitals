@@ -14,19 +14,21 @@
         <th>Continent</th>
       </tr>
       <tbody>
-        <tr ng-click="" ng-repeat="country in countries | filter:searchCountries | orderBy: 'countryName'">
-          <td>{{country.countryName}}</td>
-          <td>{{country.countryCode}}</td>
-          <td>{{country.capital}}</td>
-          <td>{{country.areaInSqKm | number}}</td>
-          <td>{{country.population | number}}</td>
-          <td>{{country.continent}}</td>
+        <tr ng-repeat="country in countries | filter:searchCountries | orderBy: 'countryName'">
+          <a href="#">
+            <td>{{country.countryName}}</td>
+            <td>{{country.countryCode}}</td>
+            <td>{{country.capital}}</td>
+            <td>{{country.areaInSqKm | number}}</td>
+            <td>{{country.population | number}}</td>
+            <td>{{country.continent}}</td>
+          </a>
         </tr>
       </tbody>
     </thead>
   </table>
   <p>&nbsp;</p>
-  <a class="btn btn-default text-center" href="#/home">Home</a>
+  <a class="btn btn-default text-center" href="#/">Home</a>
 </section>
 <!--Webservice Type : REST 
 Url : api.geonames.org/countryInfo?

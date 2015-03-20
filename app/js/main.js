@@ -3,8 +3,7 @@
 angular.module('myApp', [
   'ngRoute',
   'ngMessages',
-  'ngAnimate',
-  'ui.bootstrap'])
+  'ngAnimate'])
   .config(['$routeProvider', function ($routeProvider) {
     "use strict";
     $routeProvider
@@ -16,7 +15,30 @@ angular.module('myApp', [
         templateUrl: 'countries.html',
         controller: 'countriesCtrl'
       })
+      .when('/error', {
+        template: '<h3>Page not found - 404</h3><br><a href="#/">Go Home</a><br>'
+      })
       .otherwise({
         redirectTo: '/error'
       });
+  }])
+  .run(function ($rootScope, $location, $timeout) {
+    "use strict";
+    $rootScope.$on('$routeChangeError', function () {
+      $location.path("/error");
+    });
+    $rootScope.$on('$routeChangeStart', function () {
+      $rootScope.isLoading = true;
+    });
+    $rootScope.$on('$routeChangeSuccess', function () {
+      $timeout(function () {
+        $rootScope.isLoading = false;
+      }, 1000);
+    });
+  })
+  .controller('homeCtrl', ['$scope', function ($scope) {
+    "use strict";
+  }])
+  .controller('countriesCtrl', ['$scope', function ($scope) {
+    "use strict";
   }]);
