@@ -1,0 +1,13 @@
+
+div {
+  
+}
+
+.home-block {
+  margin-top: 100px;
+}
+
+.scrollable {
+  max-height: 500px;
+  overflow-y: auto;
+}
