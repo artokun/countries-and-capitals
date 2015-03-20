@@ -1,5 +1,8 @@
 <section class="col-sm-10 center-block countries-block">
-  <input type="text" ng-model="searchCountries">
+  <div class="text-center form-group">
+    <label for="search">Filter Countries</label>
+    <input class="form-control" id="search" type="text" ng-model="searchCountries">
+  </div>
   <table class="table table-striped table-bordered table-hover scrollable">
     <thead>
       <tr>
@@ -11,11 +14,11 @@
         <th>Continent</th>
       </tr>
       <tbody>
-        <tr ng-repeat="country in countries | filter:searchCountries | orderBy: 'countryName'">
+        <tr ng-click="" ng-repeat="country in countries | filter:searchCountries | orderBy: 'countryName'">
           <td>{{country.countryName}}</td>
           <td>{{country.countryCode}}</td>
           <td>{{country.capital}}</td>
-          <td>{{country.areaInSqKm}}</td>
+          <td>{{country.areaInSqKm | number}}</td>
           <td>{{country.population | number}}</td>
           <td>{{country.continent}}</td>
         </tr>
