@@ -15,14 +15,12 @@
       </tr>
       <tbody>
         <tr ng-repeat="country in countries | filter:searchCountries | orderBy: 'countryName'">
-          <a href="#">
             <td>{{country.countryName}}</td>
             <td>{{country.countryCode}}</td>
             <td>{{country.capital}}</td>
             <td>{{country.areaInSqKm | number}}</td>
             <td>{{country.population | number}}</td>
             <td>{{country.continent}}</td>
-          </a>
         </tr>
       </tbody>
     </thead>
