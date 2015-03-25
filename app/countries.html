@@ -1,5 +1,6 @@
-<section class="col-sm-10 center-block countries-block">
-  <div class="text-center form-group">
+<section class="row countries-block">
+  <div class="col-sm-3"></div>
+  <div class="col-sm-6 text-center form-group">
     <label for="search">Filter Countries</label>
     <input class="form-control" id="search" type="text" ng-model="searchCountries">
   </div>
@@ -15,18 +16,20 @@
       </tr>
       <tbody>
         <tr ng-repeat="country in countries | filter:searchCountries | orderBy: 'countryName'">
-            <td>{{country.countryName}}</td>
-            <td>{{country.countryCode}}</td>
-            <td>{{country.capital}}</td>
-            <td>{{country.areaInSqKm | number}}</td>
-            <td>{{country.population | number}}</td>
-            <td>{{country.continent}}</td>
+          <td>{{country.countryName}}</td>
+          <td>{{country.countryCode}}</td>
+          <td>{{country.capital}}</td>
+          <td>{{country.areaInSqKm | number}}</td>
+          <td>{{country.population | number}}</td>
+          <td>{{country.continent}}</td>
         </tr>
       </tbody>
     </thead>
   </table>
   <p>&nbsp;</p>
-  <a class="btn btn-default text-center" href="#/">Home</a>
+  <div class="text-center">
+    <a class="btn btn-default" href="#/">Home</a>
+  </div>
 </section>
 <!--Webservice Type : REST 
 Url : api.geonames.org/countryInfo?
