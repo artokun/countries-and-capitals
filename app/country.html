@@ -1,48 +1,50 @@
-<section class="row">
-  <div class="col-sm-2"></div>
-  <div class="col-sm-8">
-    <h1>{{country.name}}</h1>
-    <table>
-      <tr>
-        <td class="text-right">Population of Country</td>
-        <td>{{country.population}}</td>
-      </tr>
-      <tr>
-        <td class="text-right">Area</td>
-        <td>{{country.area}}</td>
-      </tr>
-      <tr>
-        <td class="text-right">Capital</td>
-        <td>{{country.capital}}</td>
-      </tr>
-      <tr>
-        <td class="text-right">Population of Capital</td>
-        <td>{{country.capitalPopulation}}</td>
-      </tr>
-      <tr>
-        <td class="text-right">Continent</td>
-        <td>{{country.continent}}</td>
-      </tr>
-      <tr>
-        <td class="text-right">Time Zone</td>
-        <td>{{country.timeZone}}</td>
-      </tr>
-      <tr>
-        <td class="text-right">{{country.neighborCount}} neighbors</td>
-        <td><a ng-repeat="neighbor in country.neighbors" ng-href="/countries/{{neighbor.countryCode}}">{{neighbor.name}} </a>
-        </td>
-      </tr>
-    </table>
+<section>
+  <div class="row text-center">
+    <h2>{{country.countryName}}</h2>
+     <div class="col-sm-2"></div>
+     <div class="col-sm-8">
+      <table class="table table-striped table-bordered">
+        <tr>
+          <td class="text-right">Population of Country</td>
+          <td>{{country.population | number}}</td>
+        </tr>
+        <tr>
+          <td class="text-right">Area</td>
+          <td>{{country.area | number}}</td>
+        </tr>
+        <tr>
+          <td class="text-right">Capital</td>
+          <td>{{country.capital}}</td>
+        </tr>
+        <tr>
+          <td class="text-right">Population of Capital</td>
+          <td>{{country.capitalPopulation | number}}</td>
+        </tr>
+        <tr>
+          <td class="text-right">Continent</td>
+          <td>{{country.continent}}</td>
+        </tr>
+        <tr>
+          <td class="text-right">Time Zone</td>
+          <td>{{country.timeZone}}</td>
+        </tr>
+        <tr>
+          <td class="text-right">{{country.neighborCount}} Neighbors</td>
+          <td><a ng-repeat="neighbor in country.neighbors" ng-href="/countries/{{neighbor.countryCode}}">{{neighbor.name}} </a>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
-  <div class="col-sm-2"></div>
-  <div class="col-sm-2"></div>
-  <div class="col-sm-4">
-<img ng-src="http://www.geonames.org/flags/x/{{country.countryCode | lowercase}}.gif" />
+  <div class="row">
+    <div class="col-sm-6">
+      <img class="img-responsive center-block" ng-src="http://www.geonames.org/flags/x/{{country.countryCode | lowercase}}.gif" />
+    </div>
+    <div class="col-sm-6">
+      <img class="img-responsive center-block" ng-src="http://www.geonames.org/img/country/250/{{country.countryCode | uppercase}}.png" />
+    </div>
   </div>
-  <div class="col-sm-4">
-<img ng-src="http://www.geonames.org/img/country/250/{{country.countryCode | uppercase}}.png" />
-  </div>
-  <div class="col-sm-2"></div>
+  <br>
   <div class="text-center">
     <a class="btn btn-primary" href="#/">Home</a>
     <a class="btn btn-default" href="#/countries">Browse Countries</a>

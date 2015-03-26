@@ -15,7 +15,7 @@
         <th>Continent</th>
       </tr>
       <tbody>
-        <tr ng-repeat="country in countries | filter:searchCountries | orderBy: 'countryName'">
+        <tr ng-click="goToPage(country.countryCode)" ng-repeat="country in countries | filter:searchCountries | orderBy: 'countryName'">
           <td>{{country.countryName}}</td>
           <td>{{country.countryCode}}</td>
           <td>{{country.capital}}</td>
@@ -30,8 +30,7 @@
   <div class="text-center">
     <a class="btn btn-default" href="#/">Home</a>
   </div>
-  <pre>{{country}}</pre>
 </section>
 <!--Webservice Type : REST 
-Url : api.geonames.org/countryInfo?
+Url : api.geonames.org/countryInfoJSON?
 Parameters : country (default = all countries)-->

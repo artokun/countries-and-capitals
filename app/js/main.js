@@ -17,7 +17,7 @@ angular.module('myApp', [
         templateUrl: 'countries.html',
         controller: 'countriesCtrl'
       })
-      .when('/countries/:country', {
+      .when('/countries/AF', {
         templateUrl: 'country.html',
         controller: 'countryCtrl'
       })
@@ -28,27 +28,12 @@ angular.module('myApp', [
         redirectTo: '/error'
       });
   }])
-  .factory('countriesRequest', ['$http', '$q', '$templateCache', 'CAC_API_PREFIX', 'CAC_API_USER',
-                       function ($http, $q, $templateCache, CAC_API_PREFIX, CAC_API_USER) {
-      "use strict";
-      return function (data) {
-        var defer = $q.defer();
-        $http({
-          method: 'JSONP',
-          url: CAC_API_PREFIX + CAC_API_USER,
-          callback: 'JSON_CALLBACK',
-          cache: $templateCache
-        })
-          .success(function (response) {
-            console.log('Success' + response);
-            defer.resolve(response);
-          })
-          .error(function (response) {
-            console.log('Error' + response);
-          });
-        return defer.promise;
-      };
-    }])
+  .factory('countriesRequest', ['$http', '$q', '$templateCache', 'CAC_API_PREFIX', 'CAC_API_USER', function ($http, $q, $templateCache, CAC_API_PREFIX, CAC_API_USER) {
+    "use strict";
+    return {
+
+    };
+  }])
   .run(function ($rootScope, $location, $timeout) {
     "use strict";
     $rootScope.$on('$routeChangeError', function () {
@@ -66,7 +51,34 @@ angular.module('myApp', [
   .controller('homeCtrl', ['$scope', function ($scope) {
     "use strict";
   }])
-  .controller('countriesCtrl', ['$scope', 'countriesRequest', function ($scope, countriesRequest) {
+  .controller('countriesCtrl', ['$scope', '$location', '$http', 'CAC_API_PREFIX', 'CAC_API_USER', function ($scope, $location, $http, CAC_API_PREFIX, CAC_API_USER) {
     "use strict";
-    $scope.countries = countriesRequest();
+    var goToPage;
+    $http({
+      method: 'JSONP',
+      url: CAC_API_PREFIX + CAC_API_USER
+    })
+      .success(function (response) {
+        $scope.countries = response.geonames;
+      })
+      .error(function (response) {
+        console.log('Error' + response);
+      });
+    $scope.goToPage = function (countryCode) {
+      $location.path('/countries/' + countryCode);
+    };
+  }])
+  .controller('countryCtrl', ['$scope', '$location', '$http', 'CAC_API_PREFIX', 'CAC_API_USER', function ($scope, $location, $http, CAC_API_PREFIX, CAC_API_USER) {
+    "use strict";
+    var countryName = 'United%20States';
+    $http({
+      method: 'JSONP',
+      url: 'http://api.geonames.org/search?type=json&name_equals=' + countryName + '&' + CAC_API_USER
+    })
+      .success(function (response) {
+        $scope.country = response.geonames[0];
+      })
+      .error(function (response) {
+        console.log('Error' + response);
+      });
   }]);
