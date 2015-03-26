@@ -17,7 +17,7 @@ angular.module('myApp', [
         templateUrl: 'countries.html',
         controller: 'countriesCtrl'
       })
-      .when('/countries/AF', {
+      .when('/countries/:country', {
         templateUrl: 'country.html',
         controller: 'countryCtrl'
       })
