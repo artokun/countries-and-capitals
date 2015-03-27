@@ -1,4 +1,4 @@
-/*global angular, console, alert*/
+/*global angular, console*/
 
 angular.module('myApp', [
   'ngRoute',
@@ -28,24 +28,10 @@ angular.module('myApp', [
         redirectTo: '/error'
       });
   }])
-  .factory('countriesData', function ($cacheFactory) {
-    "use strict";
-    return $cacheFactory('myData');
-  })
-  .factory('countriesRequest', ['$http', 'countriesData', 'CAC_API_PREFIX', 'CAC_API_USER', function ($http, countriesData, CAC_API_PREFIX, CAC_API_USER) {
+  .factory('countriesRequest', ['$http', '$q', '$cacheFactory', 'CAC_API_PREFIX', 'CAC_API_USER', function ($http, $q, $cacheFactory, CAC_API_PREFIX, CAC_API_USER) {
     "use strict";
     return function () {
-      var cache = countriesData.get('myData');
-      if (cache) {
-        return cache;
-      } else {
-        $http.get(CAC_API_PREFIX + CAC_API_USER)
-          .success(function (data) {
-            cache = countriesData.put('myData', data);
-            alert('Success - ' + cache);
-          });
-        return cache;
-      }
+      return $http.get(CAC_API_PREFIX + CAC_API_USER);
     };
   }])
   .run(function ($rootScope, $location, $timeout) {
@@ -67,11 +53,15 @@ angular.module('myApp', [
   }])
   .controller('countriesCtrl', ['$scope', '$location', 'countriesRequest', function ($scope, $location, countriesRequest) {
     "use strict";
-    $scope.countries = countriesRequest();
+    countriesRequest().success(function (data) {
+      $scope.countries = data.geonames;
+    });
     $scope.goToPage = function (countryCode) {
       $location.path('/countries/' + countryCode);
     };
+    
   }])
   .controller('countryCtrl', ['$scope', function ($scope) {
     "use strict";
+    
   }]);
