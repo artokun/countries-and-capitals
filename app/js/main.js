@@ -5,7 +5,7 @@ angular.module('myApp', [
   'ngMessages',
   'ngAnimate'])
   .constant('CAC_API_PREFIX', 'http://api.geonames.org/countryInfoJSON?')
-  .constant('CAC_API_USER', 'username=artokun&callback=JSON_CALLBACK')
+  .constant('CAC_API_USER', 'username=artokun')
   .config(['$routeProvider', function ($routeProvider) {
     "use strict";
     $routeProvider
@@ -28,10 +28,10 @@ angular.module('myApp', [
         redirectTo: '/error'
       });
   }])
-  .factory('countriesRequest', ['$http', '$q', '$templateCache', 'CAC_API_PREFIX', 'CAC_API_USER', function ($http, $q, $templateCache, CAC_API_PREFIX, CAC_API_USER) {
+  .factory('countriesRequest', ['$http', '$q', '$cacheFactory', 'CAC_API_PREFIX', 'CAC_API_USER', function ($http, $q, $cacheFactory, CAC_API_PREFIX, CAC_API_USER) {
     "use strict";
-    return {
-
+    return function () {
+      return $http.get(CAC_API_PREFIX + CAC_API_USER);
     };
   }])
   .run(function ($rootScope, $location, $timeout) {
@@ -51,34 +51,17 @@ angular.module('myApp', [
   .controller('homeCtrl', ['$scope', function ($scope) {
     "use strict";
   }])
-  .controller('countriesCtrl', ['$scope', '$location', '$http', 'CAC_API_PREFIX', 'CAC_API_USER', function ($scope, $location, $http, CAC_API_PREFIX, CAC_API_USER) {
+  .controller('countriesCtrl', ['$scope', '$location', 'countriesRequest', function ($scope, $location, countriesRequest) {
     "use strict";
-    var goToPage;
-    $http({
-      method: 'JSONP',
-      url: CAC_API_PREFIX + CAC_API_USER
-    })
-      .success(function (response) {
-        $scope.countries = response.geonames;
-      })
-      .error(function (response) {
-        console.log('Error' + response);
-      });
+    countriesRequest().success(function (data) {
+      $scope.countries = data.geonames;
+    });
     $scope.goToPage = function (countryCode) {
       $location.path('/countries/' + countryCode);
     };
+    
   }])
-  .controller('countryCtrl', ['$scope', '$location', '$http', 'CAC_API_PREFIX', 'CAC_API_USER', function ($scope, $location, $http, CAC_API_PREFIX, CAC_API_USER) {
+  .controller('countryCtrl', ['$scope', function ($scope) {
     "use strict";
-    var countryName = 'United%20States';
-    $http({
-      method: 'JSONP',
-      url: 'http://api.geonames.org/search?type=json&name_equals=' + countryName + '&' + CAC_API_USER
-    })
-      .success(function (response) {
-        $scope.country = response.geonames[0];
-      })
-      .error(function (response) {
-        console.log('Error' + response);
-      });
+    
   }]);
