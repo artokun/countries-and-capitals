@@ -28,6 +28,10 @@ angular.module('myApp', [
         redirectTo: '/error'
       });
   }])
+  .factory('myCache', function ($cacheFactory) {
+    "use strict";
+    return $cacheFactory('myData');
+  })
   .factory('countriesRequest', ['$http', '$q', '$cacheFactory', 'CAC_API_PREFIX', 'CAC_API_USER', function ($http, $q, $cacheFactory, CAC_API_PREFIX, CAC_API_USER) {
     "use strict";
     return function () {
@@ -51,17 +55,24 @@ angular.module('myApp', [
   .controller('homeCtrl', ['$scope', function ($scope) {
     "use strict";
   }])
-  .controller('countriesCtrl', ['$scope', '$location', 'countriesRequest', function ($scope, $location, countriesRequest) {
+  .controller('countriesCtrl', ['$scope', '$location', 'countriesRequest', 'myCache', function ($scope, $location, countriesRequest, myCache) {
     "use strict";
-    countriesRequest().success(function (data) {
-      $scope.countries = data.geonames;
-    });
-    $scope.goToPage = function (countryCode) {
-      $location.path('/countries/' + countryCode);
-    };
-    
+    //check for cached country data
+    var cache = myCache.get('myData');
+    if (cache) {
+      $scope.countries = cache;
+    } else {
+      //if not cached country data, get it and cache it
+      countriesRequest().success(function (data) {
+        $scope.countries = data.geonames;
+        myCache.put('myData', data.geonames);
+      });
+      $scope.goToPage = function (countryCode) {
+        $location.path('/countries/' + countryCode);
+      };
+    }
   }])
   .controller('countryCtrl', ['$scope', function ($scope) {
     "use strict";
-    
+
   }]);
