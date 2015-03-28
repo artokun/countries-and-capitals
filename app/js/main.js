@@ -6,6 +6,7 @@ angular.module('myApp', [
   'ngAnimate'])
   .constant('CAC_API_PREFIX', 'http://api.geonames.org/countryInfoJSON?')
   .constant('CAC_API_USER', 'username=artokun')
+  .constant('CAC_API_SEARCH', 'http://api.geonames.org/search?')
   .config(['$routeProvider', function ($routeProvider) {
     "use strict";
     $routeProvider
@@ -32,6 +33,12 @@ angular.module('myApp', [
     "use strict";
     return $cacheFactory('myData');
   })
+  .factory('searchRequest', ['$http', '$q', 'CAC_API_SEARCH', 'CAC_API_USER', function ($http, $q, CAC_API_SEARCH, CAC_API_USER) {
+    "use strict";
+    return function(countryCode) {
+      return $http.get(CAC_API_SEARCH + 'country=' + countryCode + CAC_API_USER)
+    };
+  }])
   .factory('countriesRequest', ['$http', '$q', '$cacheFactory', 'CAC_API_PREFIX', 'CAC_API_USER', function ($http, $q, $cacheFactory, CAC_API_PREFIX, CAC_API_USER) {
     "use strict";
     return function () {
@@ -57,6 +64,9 @@ angular.module('myApp', [
   }])
   .controller('countriesCtrl', ['$scope', '$location', 'countriesRequest', 'myCache', function ($scope, $location, countriesRequest, myCache) {
     "use strict";
+    $scope.goToPage = function (countryCode) {
+      $location.path('/countries/' + countryCode);
+    };
     //check for cached country data
     var cache = myCache.get('myData');
     if (cache) {
@@ -67,12 +77,12 @@ angular.module('myApp', [
         $scope.countries = data.geonames;
         myCache.put('myData', data.geonames);
       });
-      $scope.goToPage = function (countryCode) {
-        $location.path('/countries/' + countryCode);
-      };
     }
   }])
-  .controller('countryCtrl', ['$scope', function ($scope) {
+  .controller('countryCtrl', ['$scope', 'searchRequest', '$routeParam', function ($scope, searchRequest, $routeParam) {
     "use strict";
-
+    var countryCode = $routeParam.country;
+    searchRequest().success(function(data) {
+      $scope.country = data.geonames;
+    })
   }]);
