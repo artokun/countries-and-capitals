@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html ng-app="myApp" lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Countries &amp; Capitals</title>
@@ -19,9 +20,13 @@
   <script type="text/javascript" src="js/main.js"></script>
   <!-- endbuild -->
 </head>
-<body class="container">
+
+<body ng-class="{loading: isLoading}" class="container">
   <h1 class="text-center">Countries &amp; Capitals</h1>
   <hr>
-  <div ng-view></div>
+  <div class="animate-view-container">
+    <div ng-view class="animate-view"></div>
+  </div>
 </body>
+
 </html>
