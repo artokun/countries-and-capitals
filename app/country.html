@@ -10,7 +10,7 @@
         </tr>
         <tr>
           <td class="text-right">Area</td>
-          <td>{{country.area | number}}</td>
+          <td>{{country.areaInSqKm | number}} km&sup2;</td>
         </tr>
         <tr>
           <td class="text-right">Capital</td>
@@ -18,19 +18,19 @@
         </tr>
         <tr>
           <td class="text-right">Population of Capital</td>
-          <td>{{country.capitalPopulation | number}}</td>
+          <td>{{capital.population | number}}</td>
         </tr>
         <tr>
           <td class="text-right">Continent</td>
-          <td>{{country.continent}}</td>
+          <td>{{country.continentName}}</td>
         </tr>
         <tr>
           <td class="text-right">Time Zone</td>
-          <td>{{country.timeZone}}</td>
+          <td>{{capital.timezone.timeZoneId}}</td>
         </tr>
         <tr>
-          <td class="text-right">{{country.neighborCount}} Neighbors</td>
-          <td><a ng-repeat="neighbor in country.neighbors" ng-href="/countries/{{neighbor.countryCode}}">{{neighbor.name}} </a>
+          <td class="text-right">Neighbors</td>
+          <td><a ng-repeat="neighbor in neighbors" ng-href="/app/index.html#/countries/{{neighbor.countryCode}}/capital">| {{neighbor.countryName}} | </a>
           </td>
         </tr>
       </table>
