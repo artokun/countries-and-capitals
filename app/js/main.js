@@ -58,20 +58,6 @@ angular.module('myApp', [
       return $http.get(CAC_API_PREFIX + CAC_API_USER);
     };
   }])
-  .run(function ($rootScope, $location, $timeout) {
-    "use strict";
-    $rootScope.$on('$routeChangeError', function () {
-      $location.path("/error");
-    });
-    $rootScope.$on('$routeChangeStart', function () {
-      $rootScope.isLoading = true;
-    });
-    $rootScope.$on('$routeChangeSuccess', function () {
-      $timeout(function () {
-        $rootScope.isLoading = false;
-      }, 1000);
-    });
-  })
   .controller('homeCtrl', ['$scope', function ($scope) {
     "use strict";
   }])
@@ -92,8 +78,9 @@ angular.module('myApp', [
       });
     }
   }])
-  .controller('countryCtrl', ['$scope', 'countryRequest', 'capitalRequest', 'neighborsRequest', '$routeParams', function ($scope, countryRequest, capitalRequest, neighborsRequest, $routeParams) {
+  .controller('countryCtrl', ['$scope', '$rootScope', 'countryRequest', 'capitalRequest', 'neighborsRequest', '$routeParams', function ($scope, $rootScope, countryRequest, capitalRequest, neighborsRequest, $routeParams) {
     "use strict";
+    $rootScope.isLoading = true;
     var countryCode = $routeParams.country;
     countryRequest(countryCode).success(function (data) {
       var capital,
@@ -106,6 +93,7 @@ angular.module('myApp', [
       });
       neighborsRequest(geoId).success(function (data) {
         $scope.neighbors = data.geonames;
+        $rootScope.isLoading = false;
       });
     });
   }]);
