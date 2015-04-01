@@ -4,6 +4,36 @@ angular.module('myApp.ServicesModule', ['myApp'])
     "use strict";
     return $cacheFactory('myData');
   })
+  .factory('countryFactory', ['$http','$q','CAC_API_PREFIX','CAC_API_USER','myCache',
+      function($http, $q, CAC_API_PREFIX, CAC_API_USER, myCache) {
+
+        return {
+          getAllCountries: function() {
+            var cachedData = myCache.get('myData');
+            if (cachedData != null) {
+              var deferred = $q.defer();
+              deferred.resolve(cachedData);
+              return deferred.promise;
+
+            } else {
+
+              return $http.get(CAC_API_PREFIX + CAC_API_USER)
+                        .then(function(data) {
+                            myCache.put('myData', data.data);
+                            return data.data;
+                        });
+            }
+          },
+
+          getCountry: function(countryCode) {
+            return $http.get(CAC_API_PREFIX + 'country=' + countryCode + '&' + CAC_API_USER)
+                      .then(function(data) {
+                        return data.data;
+                      })
+          }
+        };
+  }])
+
   .factory('countryRequest', ['$http', 'CAC_API_PREFIX', 'CAC_API_USER', function ($http, CAC_API_PREFIX, CAC_API_USER) {
     "use strict";
     return function (countryCode) {
