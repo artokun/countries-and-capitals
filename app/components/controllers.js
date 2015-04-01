@@ -1,5 +1,5 @@
 /*global angular*/
-angular.module('myApp.CtrlModule', ['myApp', 'myApp.ServicesCtrl'])
+angular.module('myApp.CtrlModule', ['myApp', 'myApp.ServicesModule'])
   .controller('homeCtrl', ['$scope', function ($scope) {
     "use strict";
   }])
