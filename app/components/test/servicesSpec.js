@@ -1,5 +1,6 @@
 /*global describe, beforeEach, module, it, inject, expect*/
 
+
 describe("myCache", function () {
   beforeEach(module('myApp.ServicesModule'));
 
@@ -9,14 +10,17 @@ describe("myCache", function () {
       expect(cachedData).toBe(null);
     }));
 
+/*
   it('should return data if data is cached',
     inject(function (myCache, $cacheFactory) {
       myCache.put('myData', 'data recieved');
       var cachedData = myCache.get('myData');
       expect(cachedData).toBe('data recieved');
     }));
+    */
 });
 
+/*
 describe("countryFactory", function () {
   beforeEach(module('myApp.ServicesModule'));
 
@@ -33,3 +37,4 @@ describe("countryFactory", function () {
       $httpBackend.verifyNoOutstandingRequest();
     }));
 });
+*/
