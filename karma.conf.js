@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Thu Apr 02 2015 20:03:02 GMT-0700 (PDT)
+// Generated on Wed Apr 08 2015 06:43:50 GMT+0200 (CEST)
 
 module.exports = function(config) {
   config.set({
@@ -10,16 +10,21 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine','requirejs'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      {pattern:'./app/bower_components/angular/angular.js', included: true},
-      {pattern:'./app/bower_components/angular-mocks/angular-mocks.js', included:true},
-      {pattern:'./app/components/*.js', included:true},
-      {pattern:'./app/bower_components/**/*.js', included:true},
-      {pattern:'./app/components/test/*Spec.js', included: false}
+	{pattern:'./app/bower_components/jquery/dist/jquery.js', included:true},
+	{pattern:'./app/bower_components/angular/angular.js', included:true},
+	{pattern:'./app/bower_components/angular-animate/angular-animate.js', included:true},
+	{pattern:'./app/bower_components/angular-route/angular-route.js', included:true},
+	{pattern:'./app/bower_components/angular-messages/angular-messages.js', included:true},
+	{pattern:'./app/bower_components/angular-mocks/angular-mocks.js', included:true},
+
+	{pattern:'./app/components/*.js', included:true},
+	{pattern:'./app/components/test/*Spec.js', included: false},
+	'test-main.js'
     ],
 
 

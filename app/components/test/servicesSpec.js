@@ -4,20 +4,19 @@
 describe("myCache", function () {
   beforeEach(module('myApp.ServicesModule'));
 
-  it('should return null if no data is cached',
+  it('should return \'undefined\' if no data is cached',
     inject(function (myCache, $cacheFactory) {
       var cachedData = myCache.get('myData');
-      expect(cachedData).toBe(null);
+      expect(cachedData).toBe(undefined);
     }));
 
-/*
+
   it('should return data if data is cached',
     inject(function (myCache, $cacheFactory) {
       myCache.put('myData', 'data recieved');
       var cachedData = myCache.get('myData');
       expect(cachedData).toBe('data recieved');
     }));
-    */
 });
 
 /*

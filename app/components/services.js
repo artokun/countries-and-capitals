@@ -1,5 +1,5 @@
 /*global angular*/
-angular.module('myApp.ServicesModule', ['myApp'])
+angular.module('myApp.ServicesModule', [])
   .factory('myCache', function ($cacheFactory) {
     "use strict";
     return $cacheFactory('myData');
